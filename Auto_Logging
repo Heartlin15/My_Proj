@@ -1,0 +1,24 @@
+def log_Method_call(func):
+    def wrapper(*args, **kwargs):
+        print(f"[Log] Calling method: {func.__name__}")
+        return func(*args, **kwargs)
+    return wrapper
+
+class Auto_logger(type):
+    def __new__(cls, name, bases, attrdict):
+        for key, value in attrdict.items():
+            if callable(value):
+                attrdict[key] = log_Method_call(value)  # Correcting this line
+        return super().__new__(cls, name, bases, attrdict)
+
+class MyClass(metaclass=Auto_logger):
+    def method_1(self):
+        print("Method 1 is called")
+
+    def method_2(self):
+        print("Method 2 is called")
+
+# Testing
+obj = MyClass()
+obj.method_1()  # This should log and call the method
+obj.method_2()  # This should log and call the method
