@@ -12,13 +12,13 @@ class Auto_logger(type):
         return super().__new__(cls, name, bases, attrdict)
 
 class MyClass(metaclass=Auto_logger):
-    def method_1(self):
-        print("Method 1 is called")
+    def say_hello(self):
+        print("Hello")
 
-    def method_2(self):
-        print("Method 2 is called")
+    def add(self, a,b):
+        return a+b
 
 # Testing
 obj = MyClass()
-obj.method_1()  # This should log and call the method
-obj.method_2()  # This should log and call the method
+obj.say_hello()  # This should log and call the method
+print(obj.add(2,3))
